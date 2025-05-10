@@ -3,14 +3,11 @@
 <p>Demanda recogida en el sistema eléctrico peninsular de los últimos 30 días</p>
 </div>
 
-<div *ngIf="this.cargando; then loading else resultados"></div>
-
-<ng-template #loading>
+<div *ngIf="this.cargando === true">
   <app-loading></app-loading>
-</ng-template>
+</div>
 
-<ng-template #resultados>
-<table class="table table-dark table-striped">
+<table class="table table-dark table-striped" *ngIf="this.cargando === false">
   <thead>
     <tr>
       <th>Fecha</th><th>MW</th>
@@ -24,5 +21,6 @@
   
 </table>
 
-<canvas id="GraficoDemanda" class="w-100 h-100"></canvas>
-</ng-template>
+<canvas id="GraficoDemanda" class="w-100 h-100 mb-4"></canvas>
+
+<app-listacomentarios [seccion]="this.seccion"></app-listacomentarios>

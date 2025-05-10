@@ -18,6 +18,8 @@ export class CoberturaComponent {
   public demandas: Array<Demanda> = [];
   public genRenovables: Array<Generacion> = [];
   public genNoRenovables: Array<Generacion> = [];
+
+  public cargando: boolean = true;
   public grafico: any;
 
   public parametrosDemanda: any;
@@ -75,14 +77,17 @@ export class CoberturaComponent {
 
             // Si llega hasta aquí es que se han recibido todos los datos y puede construir el gráfico
             this.crearGraficoCobertura();
+            this.cargando = false;
           },
           error: error => {
             console.log("Error al leer los datos de Generación: ", error);
+            this.cargando = false;
           }
         })
       },
       error: error => {
         console.log("Error al leer los datos de Demanda: ", error);
+        this.cargando = false;
       }
     })
   }

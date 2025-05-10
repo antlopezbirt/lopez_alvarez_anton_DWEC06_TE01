@@ -15,6 +15,7 @@ import { Chart } from 'chart.js/auto';
 
 export class MixComponent implements OnInit {
 
+  public seccion: string = "mix";
   public cargando: boolean = true;
 
   public mixes: Array<Mix> = [];

@@ -10,6 +10,7 @@ import { MixComponent } from './mix/mix.component';
 import { AboutComponent } from './about/about.component';
 import { CoberturaComponent } from './cobertura/cobertura.component';
 import { LoadingComponent } from './loading/loading.component';
+import { ListacomentariosComponent } from './listacomentarios/listacomentarios.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { LoadingComponent } from './loading/loading.component';
     MixComponent,
     AboutComponent,
     CoberturaComponent,
-    LoadingComponent
+    LoadingComponent,
+    ListacomentariosComponent
   ],
   imports: [
     BrowserModule,

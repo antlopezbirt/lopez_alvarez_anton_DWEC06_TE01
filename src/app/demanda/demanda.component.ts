@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Demanda } from '../models/Demanda';
-
 import { ReeApiService } from '../services/reeapi.service';
 
 import { Chart } from 'chart.js/auto';
+
 
 @Component({
   selector: 'app-demanda',
@@ -15,9 +15,12 @@ import { Chart } from 'chart.js/auto';
 
 export class DemandaComponent implements OnInit {
 
+  public seccion: string = "demanda";
+  public cargando: boolean = true;
+
   public demandas: Array<Demanda> = [];
   public parametrosDemanda: any;
-  public cargando: boolean = true;
+    
   public grafico: any;
 
   constructor( private _reeApiService: ReeApiService) {
@@ -43,7 +46,7 @@ export class DemandaComponent implements OnInit {
   }
 
   read(): void {
-    this._reeApiService.read('demanda', this.parametrosDemanda).subscribe({
+    this._reeApiService.read(this.seccion, this.parametrosDemanda).subscribe({
       next: data => {
         for(let dato of data.included[0].attributes.values) {
           let demanda = new Demanda(dato.datetime, dato.value);
@@ -79,5 +82,4 @@ export class DemandaComponent implements OnInit {
       }
     });
   }
-
 }

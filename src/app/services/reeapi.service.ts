@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 
 
@@ -14,7 +14,7 @@ export class ReeApiService {
 
     };
 
-    constructor(public _http: HttpClient) {}
+    constructor(private _http: HttpClient) {}
 
     read(endpoint: string, parametros: any): Observable<any> {
         return this._http.get(this.baseUrl + this.endpoints[endpoint], { params: parametros });

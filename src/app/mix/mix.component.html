@@ -1,7 +1,9 @@
-<div [style.display]="this.cargando ? 'block' : 'none'">
+<div *ngIf="this.cargando === true">
   <app-loading></app-loading>
 </div>
 
-<div [style.visibility]="!this.cargando ? 'visible' : 'hidden'" class="d-flex justify-content-center">
+<div class="d-flex justify-content-center">
   <canvas id="GraficoMix" class="w-75 h-75"></canvas>
 </div>
+
+<app-listacomentarios [seccion]="this.seccion"></app-listacomentarios>
