@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { DemandasService } from '../services/demandas.service';
 import { Demanda } from '../models/Demanda';
 import { Generacion } from '../models/Generacion';
-import { GeneracionesService } from '../services/generaciones.service';
+import { ReeApiService } from '../services/reeapi.service';
 
 import { Chart } from 'chart.js/auto';
 
@@ -11,7 +10,7 @@ import { Chart } from 'chart.js/auto';
   standalone: false,
   templateUrl: './cobertura.component.html',
   styleUrl: './cobertura.component.css',
-  providers: [DemandasService, GeneracionesService]
+  providers: [ReeApiService]
 })
 
 export class CoberturaComponent {
@@ -21,23 +20,47 @@ export class CoberturaComponent {
   public genNoRenovables: Array<Generacion> = [];
   public grafico: any;
 
-  constructor(private _demandasServicio: DemandasService, private _generacionesService: GeneracionesService ) {}
+  public parametrosDemanda: any;
+  public parametrosGeneracion: any;
+
+  constructor(private _reeApiService: ReeApiService ) {
+
+    // El rango por defecto es los últimos 30 días contando el actual
+    let fechaActual: Date = new Date();
+    let fechaHaceUnMes: Date = new Date(fechaActual.getTime() - 29 * 24 * 60 * 60 * 1000);
+
+    // Prepara los parámetros del endpoint de Generación
+    this.parametrosGeneracion = {
+      start_date: fechaHaceUnMes.toISOString(),
+      end_date: fechaActual.toISOString(),
+      time_trunc: 'day',
+      geo_limit: 'peninsular',
+      geo_ids: '8741'
+    }
+
+    // Los parámetros para la Demanda son iguales excepto uno extra
+    this.parametrosDemanda = this.parametrosGeneracion;
+
+    // Añade el parametro extra para el endpoint de Demanda
+    this.parametrosDemanda.geo_trunc = 'electric_system';
+
+  }
 
   ngOnInit(): void {
     this.read();
   }
 
+  // Recoge los datos de los diferentes endpoints
   read(): void {
-    this._demandasServicio.read().subscribe({
+    this._reeApiService.read('demanda', this.parametrosDemanda).subscribe({
       next: data => {
-        //console.log("Demanda: ", data);
+        // Demanda
         for(let dato of data.included[0].attributes.values) {
           let demanda = new Demanda(dato.datetime, dato.value);
           this.demandas.push(demanda);
-          //console.log(dato);
         }
 
-        this._generacionesService.read().subscribe({
+        this._reeApiService.read('generacion', this.parametrosGeneracion).subscribe({
           next: data => {
             // Generacion renovable
             for(let dato of data.included[0].attributes.values) {
@@ -50,19 +73,23 @@ export class CoberturaComponent {
               this.genNoRenovables.push(generacion);
             }
 
+            // Si llega hasta aquí es que se han recibido todos los datos y puede construir el gráfico
             this.crearGraficoCobertura();
+          },
+          error: error => {
+            console.log("Error al leer los datos de Generación: ", error);
           }
         })
       },
       error: error => {
-        console.log("Read error: ", error);
+        console.log("Error al leer los datos de Demanda: ", error);
       }
     })
   }
 
   crearGraficoCobertura() {
 
-    let fechas: Array<String> = this.demandas.map(demanda => demanda.fecha);
+    let fechas: Array<String> = this.demandas.map(demanda => demanda.fecha.substring(0, 10));
     let mwGenRenovable: Array<Number> = this.genRenovables.map(generacion => generacion.megavatios);
     let mwGenNoRenovable: Array<Number> = this.genNoRenovables.map(generacion => generacion.megavatios);
     let mwDemanda: Array<Number> = this.demandas.map(demanda => demanda.megavatios);

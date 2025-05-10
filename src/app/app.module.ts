@@ -7,18 +7,18 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DemandaComponent } from './demanda/demanda.component';
 import { MixComponent } from './mix/mix.component';
-import { OfertaComponent } from './oferta/oferta.component';
 import { AboutComponent } from './about/about.component';
 import { CoberturaComponent } from './cobertura/cobertura.component';
+import { LoadingComponent } from './loading/loading.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DemandaComponent,
     MixComponent,
-    OfertaComponent,
     AboutComponent,
-    CoberturaComponent
+    CoberturaComponent,
+    LoadingComponent
   ],
   imports: [
     BrowserModule,

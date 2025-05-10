@@ -1,40 +1,36 @@
-<div class="container-fluid sticky-top fondo-menu mb-4">
-  <div class="container">
 
-    <nav class="navbar navbar-expand-lg bg-primary-subtle rounded-bottom">
-      <div class="container-fluid">
-        <a class="navbar-brand" [routerLink]="['/']">InfoEléctrica <i class="bi bi-lightning-fill text-warning"></i></a>
+<!-- HEADER -->
+<header class="navbar navbar-expand-lg bd-navbar sticky-top bg-black mb-4 p-0 border-bottom border-warning-subtle">
+    <nav class="container-xxl bd-gutter flex-wrap flex-lg-nowrap py-0">
+        <a class="navbar-brand p-0 me-0 me-lg-2 fw-bold fs-6" [routerLink]="['/']"><i class="bi bi-lightning-fill text-warning"></i>infoeléctrica</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link" [routerLink]="['/demanda']">Demanda</a>
+              <a class="nav-link text-white" [routerLink]="['/demanda']">Demanda</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" [routerLink]="['/mix']">Mix</a>
+              <a class="nav-link text-white" [routerLink]="['/mix']">Mix</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" [routerLink]="['/cobertura']">Cobertura Demanda/Generación</a>
+              <a class="nav-link text-white" [routerLink]="['/cobertura']">Cobertura</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" [routerLink]="['/about']">About</a>
+              <a class="nav-link text-white" [routerLink]="['/about']">Acerca de</a>
             </li>
           </ul>
         </div>
-      </div>
     </nav>
-  </div>
-</div>
+</header>
 
 <!-- CONTENIDO -->
-<div class="container">
+<div class="container col-8">
   <router-outlet></router-outlet>
 </div>
 
 <!-- FOOTER-->
-
-<div id="footer" class="container rounded-top py-3 bg-primary-subtle mt-4 text-center fs-6">
-  <span class="fw-bold">InfoEléctrica <i class="bi bi-lightning-fill text-warning"></i></span> Fuente: REE
+<div id="footer" class="container-fluid py-2 mt-4 bg-black border-top border-warning-subtle text-center fs-6">
+  <span class="fw-bold"><i class="bi bi-lightning-fill text-warning"></i>infoeléctrica</span> | Fuente: REE
 </div>

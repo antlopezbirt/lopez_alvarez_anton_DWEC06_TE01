@@ -1,4 +1,15 @@
-<p>demanda works!</p>
+<h1>Demanda</h1>
+<div class="bg-info border-left border-info">
+<p>Demanda recogida en el sistema eléctrico peninsular de los últimos 30 días</p>
+</div>
+
+<div *ngIf="this.cargando; then loading else resultados"></div>
+
+<ng-template #loading>
+  <app-loading></app-loading>
+</ng-template>
+
+<ng-template #resultados>
 <table class="table table-dark table-striped">
   <thead>
     <tr>
@@ -14,3 +25,4 @@
 </table>
 
 <canvas id="GraficoDemanda" class="w-100 h-100"></canvas>
+</ng-template>

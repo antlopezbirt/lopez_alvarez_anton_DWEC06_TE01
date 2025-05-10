@@ -1,12 +1,16 @@
-# DWEC06 TE01: InfoElectrica
+# DWEC06 TE01: Desarrollo de una Web completa
+
+# InfoEléctrica ⚡
 
 Este proyecto es una aplicación web que nos provee de información acerca del sistema gestionado por Red Eléctrica.
 
 ## Contexto
 
-Tras el reciente apagón, se detecta un pico de antención sobre los datos del mercado eléctrico. Un desarrollador aprovecha esta oportunidad creando una aplicación que se nutre de la API pública de Red Eléctrica y ofrece datos clave sobre el sistema eléctrico.
+Tras el reciente apagón eléctrico, se detecta un pico de atención sobre los datos del sistema eléctrico y las fuentes de energía.
 
-Para promover la popularidad de la aplicación, se incluye además un apartado de comentarios, donde los usuarios pueden expresar su opinión sobre los datos mostrados.
+Un desarrollador oportunista aprovecha esta tendencia creando una aplicación que se nutre de la API pública de Red Eléctrica para ofrecer una serie de datos clave.
+
+Para promover la popularidad de la aplicación, ha incluido además un apartado de comentarios, donde los usuarios pueden expresar su opinión sobre los datos y las gráficas.
 
 ## Puesta en marcha
 
@@ -17,4 +21,4 @@ npm install
 ng serve
 ```
 
-Por último solo queda abrir el navegador en: `http://localhost:4200/`.
+Por último solo queda abrir el navegador en: [http://localhost:4200/](http://localhost:4200/).
