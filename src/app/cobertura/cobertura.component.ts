@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Demanda } from '../models/Demanda';
+import { Comentario } from '../models/Comentario';
 import { Generacion } from '../models/Generacion';
 import { ReeApiService } from '../services/reeapi.service';
 
@@ -14,6 +15,8 @@ import { Chart } from 'chart.js/auto';
 })
 
 export class CoberturaComponent {
+
+  public seccion: Comentario["seccion"] = "cobertura";
 
   public demandas: Array<Demanda> = [];
   public genRenovables: Array<Generacion> = [];

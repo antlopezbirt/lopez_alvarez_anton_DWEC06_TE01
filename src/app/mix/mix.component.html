@@ -2,8 +2,22 @@
   <app-loading></app-loading>
 </div>
 
+
+<div *ngIf="this.errorApiError">
+
+  <div class="alert alert-warning" role="alert">
+    <p class="fw-bold"><i class="bi bi-exclamation-triangle-fill"></i> Error en la API de REE</p>
+    <p class="fst-italic">{{this.errorApiError}}</p>
+    <p class="fst-italic">{{this.errorApiMessage}}</p>
+  </div>
+
+</div>
+
+
+
+
 <div class="d-flex justify-content-center">
   <canvas id="GraficoMix" class="w-75 h-75"></canvas>
 </div>
 
-<app-listacomentarios [seccion]="this.seccion"></app-listacomentarios>
+<app-comentarios-lista [seccion]="this.seccion"></app-comentarios-lista>

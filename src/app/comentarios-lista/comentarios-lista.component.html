@@ -1,0 +1,72 @@
+<hr>
+<h2 class="mb-4">Comentarios:</h2>
+
+<div>
+  <div *ngIf="this.errorApiError">
+
+    <div class="alert alert-danger" role="alert">
+      <p class="fw-bold"><i class="bi bi-exclamation-triangle-fill"></i> Error en la API de comentarios</p>
+      <p class="fst-italic">{{this.errorApiError}}</p>
+      <p class="fst-italic">{{this.errorApiMessage}}</p>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- FORMULARIO PARA AÑADIR COMENTARIO NUEVO -->
+<form #formComentario="ngForm" (ngSubmit)="enviarComentario()">
+  <div class="mb-3">
+    <label for="nombre" class="form-label">Nombre</label>
+    <input type="text" name="nombre" class="form-control" [(ngModel)]="this.comentarioNuevo.nombre" required>
+    <div class="invalid-feedback">
+      Debes rellenar el nombre.
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <label for="correo" class="form-label">Correo</label>
+    <input type="email" name="correo" class="form-control" [(ngModel)]="this.comentarioNuevo.correo" required>
+    <div class="invalid-feedback">
+      Debes escribir un correo válido.
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <label for="comentario" class="form-label">Comentario</label>
+    <textarea name="comentario" class="form-control" [(ngModel)]="this.comentarioNuevo.comentario" required></textarea>
+    <div class="invalid-feedback">
+      El comentario no puede estar vacío.
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-evenly">
+    <button type="submit" class="btn btn-primary">Enviar</button>
+  </div>
+  
+</form>
+
+<!-- LISTA DE COMENTARIOS PUBLICADOS -->
+ 
+<div *ngIf="this.comentarios">
+  <div *ngFor="let comentario of this.comentarios; let indice = index">
+    <div class="card mb-4">
+      <div class="card-body">
+        <p>[{{comentario.fecha}}]</p>
+        <p>{{comentario.comentario}}</p>
+
+        <div class="d-flex justify-content-between">
+          <div class="d-flex flex-row align-items-center">
+            <img src="{{ this.hashearGravatar(comentario.correo) }}" alt="avatar" width="50"
+              height="50" />
+            <p class="small mb-0 ms-2">{{comentario.nombre}} ({{comentario.correo}})</p>
+          </div>
+          <div class="d-flex flex-row align-items-center">
+            <i class="bi bi-heart text-body"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -17,6 +17,8 @@ export class MixComponent implements OnInit {
 
   public seccion: string = "mix";
   public cargando: boolean = true;
+  public errorApiError: unknown = null;
+  public errorApiMessage: unknown = null;
 
   public mixes: Array<Mix> = [];
   public totalRenovable: unknown;
@@ -29,10 +31,14 @@ export class MixComponent implements OnInit {
   public grafico: any;
 
   constructor( private _reeApiService: ReeApiService ) {
+
+  // start_date=2025-05-09T22:00:00.000Z&end_date=2025-05-10T21:59:59.999
+
+
     this.fechaIni.setDate(this.fechaIni.getDate() - 1);
-    this.fechaIni.setHours(0,0,0,0);
+    this.fechaIni.setUTCHours(0,0,0,0);
     this.fechaFin.setDate(this.fechaFin.getDate() - 1);
-    this.fechaFin.setHours(23,59,59,999)
+    this.fechaFin.setUTCHours(23,59,59,999);
     this.parametrosMix = {
       start_date: this.fechaIni.toISOString(),
       end_date: this.fechaFin.toISOString(),
@@ -80,6 +86,9 @@ export class MixComponent implements OnInit {
       error: error => {
         console.log("Error: ", error);
         this.cargando = false;
+        
+        this.errorApiError = error.error.errors[0].detail;
+        this.errorApiMessage = error.message;
       }
     })
   }

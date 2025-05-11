@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Demanda } from '../models/Demanda';
+import { Comentario } from '../models/Comentario';
 import { ReeApiService } from '../services/reeapi.service';
 
 import { Chart } from 'chart.js/auto';
@@ -10,12 +11,11 @@ import { Chart } from 'chart.js/auto';
   standalone: false,
   templateUrl: './demanda.component.html',
   styleUrl: './demanda.component.css',
-  providers: [ReeApiService]
 })
 
 export class DemandaComponent implements OnInit {
 
-  public seccion: string = "demanda";
+  public seccion: Comentario["seccion"] = "demanda";
   public cargando: boolean = true;
 
   public demandas: Array<Demanda> = [];

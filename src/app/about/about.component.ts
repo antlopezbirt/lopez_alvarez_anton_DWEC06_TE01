@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Comentario } from '../models/Comentario';
 
 @Component({
   selector: 'app-about',
@@ -6,6 +7,12 @@ import { Component } from '@angular/core';
   templateUrl: './about.component.html',
   styleUrl: './about.component.css'
 })
-export class AboutComponent {
+export class AboutComponent implements OnInit {
+  public seccion: Comentario["seccion"] = "about";
 
+  constructor() {}
+
+  ngOnInit(): void {
+
+  }
 }
