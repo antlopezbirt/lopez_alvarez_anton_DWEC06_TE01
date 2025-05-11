@@ -14,40 +14,10 @@
 </div>
 
 
-<!-- FORMULARIO PARA AÑADIR COMENTARIO NUEVO -->
-<form #formComentario="ngForm" (ngSubmit)="enviarComentario()">
-  <div class="mb-3">
-    <label for="nombre" class="form-label">Nombre</label>
-    <input type="text" name="nombre" class="form-control" [(ngModel)]="this.comentarioNuevo.nombre" required>
-    <div class="invalid-feedback">
-      Debes rellenar el nombre.
-    </div>
-  </div>
-
-  <div class="mb-3">
-    <label for="correo" class="form-label">Correo</label>
-    <input type="email" name="correo" class="form-control" [(ngModel)]="this.comentarioNuevo.correo" required>
-    <div class="invalid-feedback">
-      Debes escribir un correo válido.
-    </div>
-  </div>
-
-  <div class="mb-3">
-    <label for="comentario" class="form-label">Comentario</label>
-    <textarea name="comentario" class="form-control" [(ngModel)]="this.comentarioNuevo.comentario" required></textarea>
-    <div class="invalid-feedback">
-      El comentario no puede estar vacío.
-    </div>
-  </div>
-
-  <div class="d-flex justify-content-evenly">
-    <button type="submit" class="btn btn-primary">Enviar</button>
-  </div>
-  
-</form>
+<app-comentario-form [comentarios]="this.comentarios"></app-comentario-form>
 
 <!-- LISTA DE COMENTARIOS PUBLICADOS -->
- 
+
 <div *ngIf="this.comentarios">
   <div *ngFor="let comentario of this.comentarios; let indice = index">
     <div class="card mb-4">

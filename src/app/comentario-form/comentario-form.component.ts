@@ -14,6 +14,7 @@ export class ComentarioFormComponent implements OnInit {
   @Input() seccion: Comentario["seccion"] = "demanda";
   @Input() comentarioEditar: any;
   @Input() siguienteRuta: string = "";
+  @Input() comentarios: Array<Comentario> = [];
 
   public comentario: Comentario;
 
@@ -84,8 +85,8 @@ export class ComentarioFormComponent implements OnInit {
     // PUT
     if(this.comentarioEditar) {
       this._comentariosService.update(this.comentarioEditar.id, this.comentario).subscribe({
-        next: data => {
-          console.log("OK: ", data);
+        next: dato => {
+          console.log("OK: ", dato);
         },
         error: error => {
           console.log("Error: ", error);
@@ -114,6 +115,10 @@ export class ComentarioFormComponent implements OnInit {
           this.comentarioValido = true;
           this.comentarioActivo = false;
           this.botonActivo = false;
+
+          let comentario = new Comentario(data.id, data.nombre, data.correo, data.comentario, data.fecha, data.seccion);
+          this.comentarios.unshift(comentario);
+          console.log("Comentarios: ", this.comentarios);
 
         },
         error: error => {
