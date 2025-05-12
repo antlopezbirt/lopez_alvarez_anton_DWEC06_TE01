@@ -4,7 +4,7 @@ export class Comentario {
         public nombre: string,
         public correo: string,
         public comentario: string,
-        public fecha: string,
+        public fecha: Date,
         public seccion: "demanda" | "mix" | "cobertura" | "about"
     ) {}
 }

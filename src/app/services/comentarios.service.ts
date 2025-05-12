@@ -13,14 +13,14 @@ export class ComentariosService {
     constructor ( private _http: HttpClient ) {}
 
     getAll(): Observable<Comentario[]> {
-        let params = new HttpParams();
-        params = params.append('sortBy', 'fecha');
-        params = params.append('order', 'desc');
+        // let params = new HttpParams();
+        // params = params.append('sortBy', 'fecha');
+        // params = params.append('order', 'desc');
 
-        let url = new URL(this.baseUrl);
-        url.searchParams.append('sortBy', 'id');
-        url.searchParams.append('order', 'desc');
-        return this._http.get<Comentario[]>(url.toString(), {headers: new HttpHeaders('content-type:application/json')});
+        // let url = new URL(this.baseUrl);
+        // url.searchParams.append('sortBy', 'id');
+        // url.searchParams.append('order', 'desc');
+        return this._http.get<Comentario[]>(this.baseUrl, {headers: new HttpHeaders('content-type:application/json')});
     }
 
     getById(id: string): Observable<any> {

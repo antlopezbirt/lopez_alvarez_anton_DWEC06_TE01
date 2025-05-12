@@ -11,6 +11,7 @@ import { Chart } from 'chart.js/auto';
   standalone: false,
   templateUrl: './demanda.component.html',
   styleUrl: './demanda.component.css',
+  providers: [ReeApiService]
 })
 
 export class DemandaComponent implements OnInit {

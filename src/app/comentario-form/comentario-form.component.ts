@@ -1,22 +1,24 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Comentario } from '../models/Comentario';
 import { ComentariosService } from '../services/comentarios.service';
+import { ToastService } from '../services/toasts.service';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-comentario-form',
   standalone: false,
   templateUrl: './comentario-form.component.html',
-  styleUrl: './comentario-form.component.css'
+  styleUrl: './comentario-form.component.css',
+  providers: [ComentariosService, ToastService]
 })
 export class ComentarioFormComponent implements OnInit {
 
-  @Input() seccion: Comentario["seccion"] = "demanda";
+  @Input() seccion: any;
   @Input() comentarioEditar: any;
   @Input() siguienteRuta: string = "";
   @Input() comentarios: Array<Comentario> = [];
 
-  public comentario: Comentario;
+  public comentario: any;
 
   // Atributos para validación
   public nombreValido: boolean = true;
@@ -28,11 +30,11 @@ export class ComentarioFormComponent implements OnInit {
   public botonActivo: boolean = false;
 
 
-  constructor( private _router: Router, private _comentariosService: ComentariosService) {
+  constructor( private _router: Router, private _comentariosService: ComentariosService, public _toastService: ToastService) {
     if(this.comentarioEditar) {
       this.comentario = this.comentarioEditar;
     } else {
-      this.comentario = new Comentario('', '', '', '', '', this.seccion);
+      this.comentario = new Comentario('', '', '', '', new Date(), this.seccion);
     }
   }
 
@@ -80,7 +82,6 @@ export class ComentarioFormComponent implements OnInit {
   // ------------------------- PROCESADO ---------------------------------
 
   enviarComentario(): void {
-    console.log(this.comentario);
 
     // PUT
     if(this.comentarioEditar) {
@@ -95,13 +96,13 @@ export class ComentarioFormComponent implements OnInit {
 
     // CREATE
     } else {
-      let fecha = new Date().toISOString();
+      let fecha = new Date();
       let comentarioNuevo = {
         "nombre": this.comentario.nombre,
         "correo": this.comentario.correo,
         "comentario": this.comentario.comentario,
         "fecha": fecha,
-        "seccion": this.comentario.seccion
+        "seccion": this.seccion
       }
 
       this._comentariosService.create(comentarioNuevo).subscribe({
@@ -116,8 +117,9 @@ export class ComentarioFormComponent implements OnInit {
           this.comentarioActivo = false;
           this.botonActivo = false;
 
-          let comentario = new Comentario(data.id, data.nombre, data.correo, data.comentario, data.fecha, data.seccion);
+          let comentario = new Comentario(data.id, data.nombre, data.correo, data.comentario, new Date(data.fecha), data.seccion);
           this.comentarios.unshift(comentario);
+          this._toastService.mostrar('Añadido nuevo comentario');
           console.log("Comentarios: ", this.comentarios);
 
         },

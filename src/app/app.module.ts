@@ -14,9 +14,9 @@ import { LoadingComponent } from './loading/loading.component';
 import { ListacomentariosComponent } from './comentarios-lista/comentarios-lista.component';
 import { FormsModule } from '@angular/forms';
 import { ComentarioFormComponent } from './comentario-form/comentario-form.component';
+import { ToastContenedorComponent } from './toast-contenedor/toast-contenedor.component';
 
-import { ComentariosService } from './services/comentarios.service';
-import { ReeApiService } from './services/reeapi.service';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -27,7 +27,8 @@ import { ReeApiService } from './services/reeapi.service';
     CoberturaComponent,
     LoadingComponent,
     ListacomentariosComponent,
-    ComentarioFormComponent
+    ComentarioFormComponent,
+    ToastContenedorComponent
   ],
   imports: [
     BrowserModule,
@@ -35,8 +36,9 @@ import { ReeApiService } from './services/reeapi.service';
     RouterModule,
     routing,
     FormsModule,
+    NgbModule,
   ],
-  providers: [appRoutingProviders, provideHttpClient(), ReeApiService, ComentariosService],
+  providers: [appRoutingProviders, provideHttpClient()],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

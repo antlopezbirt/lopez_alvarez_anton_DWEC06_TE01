@@ -1,0 +1,20 @@
+<div *ngFor="let toast of _toastsService.toasts">
+  <ngb-toast #toast header='infoeléctrica' [autohide]="true"
+      [delay]="5000"
+      (hide)="_toastsService.eliminar(toast)">
+    {{ toast.mensaje }}
+  </ngb-toast>
+</div>
+  
+
+
+ <!-- <ngb-toast header='infoeléctrica'
+    *ngFor="let toast of _toastService.toasts"
+    [class]="toast.classname"
+    [autohide]="true"
+    [delay]="toast.delay || 5000"
+    (hide)="_toastService.eliminar(toast)"
+  >
+
+   {{ toast.mensaje }}
+</ngb-toast> -->
