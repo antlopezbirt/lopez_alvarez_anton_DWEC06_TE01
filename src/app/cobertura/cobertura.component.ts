@@ -14,7 +14,7 @@ import { Chart } from 'chart.js/auto';
   providers: [ReeApiService]
 })
 
-export class CoberturaComponent {
+export class CoberturaComponent implements OnInit {
 
   public seccion: Comentario["seccion"] = "cobertura";
 

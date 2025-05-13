@@ -24,7 +24,7 @@ export class ComentariosService {
     }
 
     getById(id: string): Observable<any> {
-        return this._http.get(this.baseUrl + id);
+        return this._http.get<Comentario>(this.baseUrl + '/' + id);
     }
 
     create(comentario: any): Observable<any> {
@@ -32,11 +32,11 @@ export class ComentariosService {
     }
 
     update(id: string, comentario: any): Observable<any> {
-        return this._http.post(this.baseUrl + id, comentario);
+        return this._http.put(this.baseUrl + '/' + id, comentario);
     }
 
     delete(id: string): Observable<any> {
-        return this._http.delete(this.baseUrl + id);
+        return this._http.delete(this.baseUrl + '/' + id);
     }
 }
 

@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { ComentariosService } from '../services/comentarios.service';
+import { LoginService } from '../services/login.service';
 import { Comentario } from '../models/Comentario';
 import CryptoJS from 'crypto-js';
 
@@ -11,13 +12,13 @@ import CryptoJS from 'crypto-js';
   styleUrl: './comentarios-lista.component.css',
   providers: [ComentariosService]
 })
-export class ListacomentariosComponent implements OnInit {
+export class ComentariosListaComponent implements OnInit {
   @Input() seccion: any;
   public comentarios: Array<Comentario> = [];
   public errorApiError: unknown = null;
   public errorApiMessage: unknown = null;
 
-  constructor ( private _router: Router, private _comentariosService: ComentariosService ) {
+  constructor ( private _router: Router, public _loginService: LoginService, private _comentariosService: ComentariosService ) {
     this.readComentarios();
   }
 
@@ -44,9 +45,10 @@ export class ListacomentariosComponent implements OnInit {
   }
 
   editarComentario(id: any): void {
-    this._router.navigate(['editar', id], {skipLocationChange: true});
+    this._router.navigate(['editar', id, this.seccion],);
   }
 
+  // Devuelve la ruta de iconos generados por Gravatar
   hashearGravatar(correo: string): string {
     const hashedEmail = CryptoJS.SHA256(correo);
     return 'https://www.gravatar.com/avatar/' + hashedEmail + '?d=identicon&s=50';

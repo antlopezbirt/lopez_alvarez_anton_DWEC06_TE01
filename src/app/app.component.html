@@ -20,13 +20,21 @@
             <li class="nav-item">
               <a class="nav-link text-white" [routerLink]="['/about']">Acerca de</a>
             </li>
+            <!-- Elemento de login -->
+            <li class="nav-item" role="button" *ngIf="this.logueado == false || this.logueado == null; else elseBlock">
+                <a class="nav-link text-white" [routerLink]="['/login']" alt="Acceder" title="Acceder"><i class="bi bi-unlock"></i></a>
+            </li>
+              <ng-template #elseBlock>
+                <a class="nav-link text-white" [routerLink]="['']" (click)="this.deslogueo()" alt="Salir" title="Salir"><i class="bi bi-lock"></i></a>
+              </ng-template>
+            
           </ul>
         </div>
     </nav>
 </header>
 
 <!-- CONTENIDO -->
-<div class="container col-8">
+<div class="container col-6">
   <router-outlet></router-outlet>
 </div>
 

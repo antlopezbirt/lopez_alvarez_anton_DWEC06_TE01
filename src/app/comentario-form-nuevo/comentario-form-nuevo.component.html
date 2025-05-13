@@ -23,31 +23,8 @@
     </div>
   </div>
 
-  <div *ngIf="this.comentarioEditar">
-    <div class="mb-3">
-      <label for="fecha" class="form-label">Fecha y hora</label>
-      <input type="datetime-local" name="fecha" class="form-control" [(ngModel)]="this.comentario.fecha">
-    </div>
-  </div>
-
-  <div *ngIf="this.comentarioEditar">
-    <div class="mb-3">
-      <label for="seccion" class="form-label">Sección</label>
-      <select name="seccion" class="form-control" [(ngModel)]="this.comentario.seccion">
-        <option value="demanda">Demanda</option>
-        <option value="mix">Mix</option>
-        <option value="cobertura">Cobertura</option>
-        <option value="about">Acerca de</option>
-      </select>
-    </div>
-  </div>
-
   <div class="d-flex justify-content-evenly">
-    <div *ngIf="this.comentarioEditar">
-      <button type="submit" class="btn btn-primary" (click)="cancelar()">Cancelar</button>
-      <button type="submit" class="btn btn-primary" (click)="borrarComentario()">Borrar</button>
-    </div>
-    <button type="submit" class="btn btn-primary" (click)="enviarComentario(); formComentario.resetForm()" [disabled]="!this.botonActivo || !this.validarBoton()">Enviar</button>
+    <button type="submit" class="btn btn-success" (click)="enviarComentario(); formComentario.resetForm()" [disabled]="!this.botonActivo || !this.validarBoton()">Enviar</button>
   </div>
   
 </form>

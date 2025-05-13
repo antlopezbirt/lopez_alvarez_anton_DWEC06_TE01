@@ -1,7 +1,7 @@
 <hr class="mt-5">
 <h2 class="mb-4 fs-5">Añade tu comentario:</h2>
 
-<app-comentario-form [comentarios]="this.comentarios" [seccion]="this.seccion"></app-comentario-form>
+<app-comentario-form-nuevo [comentarios]="this.comentarios" [seccion]="this.seccion"></app-comentario-form-nuevo>
 
 
 <!-- Muestra una alerta si hay error en la API -->
@@ -34,7 +34,10 @@
             <p class="small mb-0 ms-2">{{comentario.nombre}} ({{comentario.correo}})</p>
           </div>
           <div class="d-flex flex-row align-items-center">
-            <i class="bi bi-heart text-body" (click)="editarComentario(comentario.id)"></i>
+            <i class="bi bi-heart text-body"></i>
+            <div *ngIf="this._loginService.comprobarLogin()">
+              <button class="btn btn-primary ms-2" (click)="editarComentario(comentario.id)">Editar</button>
+            </div>
           </div>
         </div>
       </div>
