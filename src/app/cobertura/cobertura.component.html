@@ -1,11 +1,9 @@
 <h1 class="display-6">Cobertura de la demanda</h1>
 <article>
   <p>
-    Este gráfico muestra cómo se ha cubierto sido la generación que ha cubierto
-    la demanda de eletricidad, dividiéndola en generación renovable y no renovable.
-  </p>
-  <p>
-    Por defecto se muestran los últimos 30 días.
+    Este gráfico muestra cómo ha sido la generación que ha cubierto
+    la demanda de electricidad en los últimos 30 días, dividiéndola en 
+    generación renovable y no renovable.
   </p>
 </article>
 
@@ -13,6 +11,16 @@
 
 <div *ngIf="this.cargando === true">
   <app-loading></app-loading>
+</div>
+
+<div *ngIf="this.errorApiError">
+
+  <div class="alert alert-warning" role="alert">
+    <p class="fw-bold"><i class="bi bi-exclamation-triangle-fill"></i> Error en la API de REE</p>
+    <p class="fst-italic">{{this.errorApiError}}</p>
+    <p class="fst-italic">{{this.errorApiMessage}}</p>
+  </div>
+
 </div>
 
 <canvas id="GraficoCobertura" class="w-100 h-100"></canvas>

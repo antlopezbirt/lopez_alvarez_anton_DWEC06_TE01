@@ -11,13 +11,17 @@ import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 })
 export class LoginFormComponent implements OnInit {
 
-  @Input() origen: string = "";
   private destino: string | null = null;
   private comentarioId: string | null = null;
+
+  public errorApiError: string | null = null;
+  public errorApiMessage: string | null = null;
 
   public usuario: string = "";
   public password: string = "";
   public loginValido: boolean | null = null;
+  public errorApiLoginError: string | null = null;
+  public errorApiLoginMessage: string = "";
 
   // Atributos para validación
   public usuarioValido: boolean = true;
@@ -32,6 +36,8 @@ export class LoginFormComponent implements OnInit {
       this.comentarioId = params.get('id');
       this.destino = params.get('destino');
       if (this.destino === null) this.destino = "";
+
+      console.log(this.comentarioId, this.destino);
     });
   }
 
@@ -40,25 +46,21 @@ export class LoginFormComponent implements OnInit {
   }
 
   chequearLogin(): void {
-    if (this._loginService.loguearse(this.usuario, this.password)) {
-      this.loginValido = true;
-      console.log(this.loginValido);
-      if (this.comentarioId != null) {
-        this._router.navigate(['editar', this.comentarioId, this.destino]);
-      } else {
-        location.replace('/');
-      }
-      
-    } else {
+
+    if(!this._loginService.loguearse(this.usuario, this.password)) {
       this.loginValido = false;
+    } else if(this.comentarioId != null) {
+        location.replace('/editar/' + this.comentarioId + '/' + this.destino);
+    } else {
+      location.replace('/');
     }
   }
 
   cancelar(): void {
-    this._router.navigate([this.origen]);
+    this._router.navigate(['/']);
   }
 
-    // -------------------------- VALIDACIONES ----------------------------------
+  // -------------------------- VALIDACIONES ----------------------------------
 
   validarUsuario(): void {
     this.usuarioActivo = true;

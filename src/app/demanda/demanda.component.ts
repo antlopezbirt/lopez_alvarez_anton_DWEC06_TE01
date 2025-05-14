@@ -17,10 +17,12 @@ import { Chart } from 'chart.js/auto';
 export class DemandaComponent implements OnInit {
 
   public seccion: Comentario["seccion"] = "demanda";
+  public cargando: boolean = true;
+  public errorApiError: string | null = null;
+  public errorApiMessage: string | null = null;
+
   public fechaIni: any;
   public fechaFin: any;
-  public cargando: boolean = true;
-
   public demandas: Array<Demanda> = [];
   public diferencias: Array<any> = [];
   public parametrosDemanda: any;
@@ -53,6 +55,7 @@ export class DemandaComponent implements OnInit {
   read(): void {
     this._reeApiService.read(this.seccion, this.parametrosDemanda).subscribe({
       next: data => {
+        this.errorApiError = null;
         let datoAnterior = 0;
         for(let dato of data.included[0].attributes.values) {
           let demanda = new Demanda(dato.datetime, dato.value);
@@ -67,6 +70,9 @@ export class DemandaComponent implements OnInit {
       error: error => {
         console.log("Read error: ", error);
         this.cargando = false;
+
+        this.errorApiError = error.error.errors[0].detail;
+        this.errorApiMessage = error.message;
       }
     })
   }

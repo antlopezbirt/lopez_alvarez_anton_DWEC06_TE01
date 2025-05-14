@@ -1,7 +1,7 @@
 
 <!-- HEADER -->
 <header class="navbar navbar-expand-lg bd-navbar sticky-top bg-black mb-4 p-0 border-bottom border-warning-subtle">
-    <nav class="container-xxl col-6 bd-gutter flex-wrap flex-lg-nowrap py-0">
+    <nav class="container-xxl col-10 col-xl-6 bd-gutter flex-wrap flex-lg-nowrap py-0">
         <a class="navbar-brand p-0 me-0 me-lg-2 fw-bold fs-6" [routerLink]="['/']"><i class="bi bi-lightning-fill text-warning"></i>infoeléctrica</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -25,7 +25,7 @@
                 <a class="nav-link fondo-dark text-white" [routerLink]="['/login']" alt="Acceder" title="Acceder"><i class="bi bi-unlock"></i></a>
             </li>
               <ng-template #elseBlock>
-                <a class="nav-link text-white" [routerLink]="['']" (click)="this.deslogueo()" alt="Salir" title="Salir"><i class="bi bi-lock"></i></a>
+                <a class="nav-link fondo-dark text-white" [routerLink]="['']" (click)="this.deslogueo()" alt="Salir" title="Salir"><i class="bi bi-lock"></i></a>
               </ng-template>
             
           </ul>

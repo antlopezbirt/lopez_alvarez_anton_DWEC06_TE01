@@ -13,6 +13,16 @@
   <app-loading></app-loading>
 </div>
 
+<div *ngIf="this.errorApiError">
+
+  <div class="alert alert-warning" role="alert">
+    <p class="fw-bold"><i class="bi bi-exclamation-triangle-fill"></i> Error en la API de REE</p>
+    <p class="fst-italic">{{this.errorApiError}}</p>
+    <p class="fst-italic">{{this.errorApiMessage}}</p>
+  </div>
+
+</div>
+
 <!-- <canvas id="GraficoDemanda" class="w-100 h-100 mb-4"></canvas> -->
 
 <table class="table table-dark table-striped" *ngIf="this.cargando === false">

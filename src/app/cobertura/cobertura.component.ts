@@ -17,12 +17,15 @@ import { Chart } from 'chart.js/auto';
 export class CoberturaComponent implements OnInit {
 
   public seccion: Comentario["seccion"] = "cobertura";
+  public cargando: boolean = true;
+  public errorApiError: string | null = null;
+  public errorApiMessage: string | null = null;
 
   public demandas: Array<Demanda> = [];
   public genRenovables: Array<Generacion> = [];
   public genNoRenovables: Array<Generacion> = [];
 
-  public cargando: boolean = true;
+  
   public grafico: any;
 
   public parametrosDemanda: any;
@@ -68,6 +71,8 @@ export class CoberturaComponent implements OnInit {
 
         this._reeApiService.read('generacion', this.parametrosGeneracion).subscribe({
           next: data => {
+            this.errorApiError = null;
+
             // Generacion renovable
             for(let dato of data.included[0].attributes.values) {
               let generacion = new Generacion(dato.datetime, dato.value, true, dato.percentage);
@@ -84,14 +89,21 @@ export class CoberturaComponent implements OnInit {
             this.cargando = false;
           },
           error: error => {
+
             console.log("Error al leer los datos de Generación: ", error);
             this.cargando = false;
+
+            this.errorApiError = error.error.errors[0].detail;
+            this.errorApiMessage = error.message;
           }
         })
       },
       error: error => {
         console.log("Error al leer los datos de Demanda: ", error);
         this.cargando = false;
+
+        this.errorApiError = error.error.errors[0].detail;
+        this.errorApiMessage = error.message;
       }
     })
   }

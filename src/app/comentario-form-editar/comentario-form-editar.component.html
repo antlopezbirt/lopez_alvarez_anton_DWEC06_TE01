@@ -1,5 +1,14 @@
 <h1 class="display-6 mb-5">Editar comentario</h1>
 
+<!-- Muestra una alerta si hay error en la API -->
+<div *ngIf="this.errorApiComentariosError">
+  <div class="alert alert-warning" role="alert">
+    <p class="fw-bold"><i class="bi bi-exclamation-triangle-fill"></i> Error en la API de comentarios</p>
+    <p class="fst-italic">{{this.errorApiComentariosError}}</p>
+    <p class="fst-italic">{{this.errorApiComentariosMessage}}</p>
+  </div>
+</div>
+
 <form #formComentario="ngForm" class="border rounded p-4">
   <div class="mb-3">
     <label for="nombre" class="form-label">Nombre</label>

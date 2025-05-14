@@ -32,7 +32,7 @@ import { LoginFormComponent } from './login-form/login-form.component';
     ComentarioFormNuevoComponent,
     ToastContenedorComponent,
     ComentarioFormEditarComponent,
-    LoginFormComponent
+    LoginFormComponent,
   ],
   imports: [
     BrowserModule,

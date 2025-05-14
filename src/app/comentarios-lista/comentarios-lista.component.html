@@ -6,7 +6,7 @@
 
 <!-- Muestra una alerta si hay error en la API -->
 <div *ngIf="this.errorApiError">
-  <div class="alert alert-danger" role="alert">
+  <div class="alert alert-warning" role="alert">
     <p class="fw-bold"><i class="bi bi-exclamation-triangle-fill"></i> Error en la API de comentarios</p>
     <p class="fst-italic">{{this.errorApiError}}</p>
     <p class="fst-italic">{{this.errorApiMessage}}</p>

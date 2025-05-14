@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { ComentariosService } from '../services/comentarios.service';
 import { LoginService } from '../services/login.service';
+import { ComentariosService } from '../services/comentarios.service';
 import { Comentario } from '../models/Comentario';
 import CryptoJS from 'crypto-js';
 
@@ -10,13 +10,15 @@ import CryptoJS from 'crypto-js';
   standalone: false,
   templateUrl: './comentarios-lista.component.html',
   styleUrl: './comentarios-lista.component.css',
-  providers: [ComentariosService]
+  providers: [LoginService, ComentariosService]
 })
 export class ComentariosListaComponent implements OnInit {
+
   @Input() seccion: any;
+
   public comentarios: Array<Comentario> = [];
-  public errorApiError: unknown = null;
-  public errorApiMessage: unknown = null;
+  public errorApiError: string | null = null;
+  public errorApiMessage: string | null = null;
 
   constructor ( private _router: Router, public _loginService: LoginService, private _comentariosService: ComentariosService ) {
     this.readComentarios();
@@ -30,6 +32,7 @@ export class ComentariosListaComponent implements OnInit {
     this._comentariosService.getAll().subscribe({
       next: data => {
         for (let dato of data) {
+          this.errorApiError = null;
           if(dato.seccion === this.seccion) {
             let comentario = new Comentario(dato.id, dato.nombre, dato.correo, dato.comentario, new Date(dato.fecha), dato.seccion);
             this.comentarios.push(comentario);

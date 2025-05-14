@@ -1,10 +1,10 @@
 import { Injectable } from "@angular/core";
-import { Login } from "../models/Login";
+import * as loginData from "../data/login.json";
 import CryptoJS from 'crypto-js';
 
 @Injectable()
 export class LoginService {
-    private loginData = Login;
+    private loginData: any = (loginData as any).default;
 
     constructor() {}
 

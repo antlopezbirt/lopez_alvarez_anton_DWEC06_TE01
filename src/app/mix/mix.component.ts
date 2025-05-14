@@ -17,8 +17,8 @@ export class MixComponent implements OnInit {
 
   public seccion: string = "mix";
   public cargando: boolean = true;
-  public errorApiError: unknown = null;
-  public errorApiMessage: unknown = null;
+  public errorApiError: string | null = null;
+  public errorApiMessage: string | null = null;
 
   public mixes: Array<Mix> = [];
   public totales: Array<Mix> = [];
@@ -37,8 +37,6 @@ export class MixComponent implements OnInit {
     this.fechaIni.setDate(this.fechaIni.getDate() - 1);
     this.fechaIniForm = this.fechaIni.toISOString();
     this.fechaIniForm = this.fechaIniForm.substring(0, (this.fechaIniForm.length - 14));
-    console.log(this.fechaIniForm);
-
   }
 
   ngOnInit(): void {
@@ -64,7 +62,9 @@ export class MixComponent implements OnInit {
 
     this._reeApiService.read('mix', this.parametrosMix).subscribe({
       next: data => {
-        console.log("Mix: ", data.included[0].attributes.content);
+        // console.log("Mix: ", data.included[0].attributes.content);
+        this.errorApiError = null;
+
         for(let dato of data.included[0].attributes.content) {
 
           let mix = new Mix(dato.attributes.values[0].datetime, dato.attributes.title, dato.attributes.total, true, dato.attributes.values[0].percentage);
@@ -135,10 +135,18 @@ export class MixComponent implements OnInit {
         plugins: {
           legend: {
             position: 'top',
+            labels: {
+              font: {
+                size: 14
+              }
+            }
           },
           title: {
             display: true,
-            text: 'Mix Renovables / No Renovables'
+            text: 'Mix: Renovables / No Renovables',
+            font: {
+              size: 20
+            }
           }
         }
       }
@@ -153,10 +161,18 @@ export class MixComponent implements OnInit {
         plugins: {
           legend: {
             position: 'top',
+            labels: {
+              font: {
+                size: 14
+              }
+            }
           },
           title: {
             display: true,
-            text: 'Mix Renovables / No Renovables'
+            text: 'Mix: todas las fuentes de generación',
+            font: {
+              size: 20
+            }
           }
         }
       }

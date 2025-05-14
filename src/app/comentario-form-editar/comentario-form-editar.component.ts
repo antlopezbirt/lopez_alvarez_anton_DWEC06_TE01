@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Comentario } from '../models/Comentario';
 import { ComentarioFormNuevoComponent } from '../comentario-form-nuevo/comentario-form-nuevo.component';
-import { Router, ParamMap, ActivatedRoute, Route } from '@angular/router';
+import { Router, ParamMap, ActivatedRoute } from '@angular/router';
 import { LoginService } from '../services/login.service';
 import { ComentariosService } from '../services/comentarios.service';
 import { ToastService } from '../services/toasts.service';
@@ -21,6 +21,10 @@ export class ComentarioFormEditarComponent extends ComentarioFormNuevoComponent 
   public comentarioEditar: boolean = false;
   public fechaEditar: string = "";
 
+  public errorApiComentariosError: string | null = null;
+  public errorApiComentariosMessage: string | null = null;
+  public errorApiLoginError: string | null = null;
+  public errorApiLoginMessage: string | null = null;
 
   constructor(
     private _route: ActivatedRoute, private _router: Router, 
@@ -30,9 +34,11 @@ export class ComentarioFormEditarComponent extends ComentarioFormNuevoComponent 
     super(_comentariosService, _toastsService);
 
     this._route.paramMap.subscribe((params: ParamMap) => {
+
       this.comentarioId = params.get('id');
       this.destino = params.get('destino');
 
+      // Requiere estar logueado
       if(!this._loginService.comprobarLogin()) {
         this.redirigirLogin(this.comentarioId, this.destino);
       } else if(this.comentarioId != 0 && this.comentarioId != "" && this.comentarioId != null) {
@@ -40,9 +46,8 @@ export class ComentarioFormEditarComponent extends ComentarioFormNuevoComponent 
       } else {
         this.cancelar();
       }
-    });
 
-    
+    });
   }
 
   override ngOnInit(): void {
@@ -75,8 +80,8 @@ export class ComentarioFormEditarComponent extends ComentarioFormNuevoComponent 
       },
       error: error => {
         console.log("Error al recuperar el comentario: ", error);
-        this.cancelar();
-        // TODO: Reenviar con un alert a index.html
+        this.errorApiComentariosError = error.error;
+        this.errorApiComentariosMessage = error.message;
       }
     })
   }
@@ -97,6 +102,7 @@ export class ComentarioFormEditarComponent extends ComentarioFormNuevoComponent 
     this._comentariosService.update(this.comentario.id, this.comentario).subscribe({
       next: dato => {
         console.log("OK: ", dato);
+        alert('El comentario se ha modificado correctamente.');
         this.cancelar();
       },
       error: error => {
@@ -106,15 +112,16 @@ export class ComentarioFormEditarComponent extends ComentarioFormNuevoComponent 
   }
 
   borrarComentario(): void {
-
     // DELETE
     this._comentariosService.delete(this.comentario.id).subscribe({
       next: data => {
         console.log("OK: ", data);
+        alert('El comentario se ha eliminado correctamente.');
         this.cancelar();
       },
       error: error => {
         console.log("Error: ", error);
+        alert('Ha habido un error al eliminar el comentario.');
       }
     });
   }
