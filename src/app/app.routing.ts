@@ -12,7 +12,7 @@ import { LoginFormComponent } from "./login-form/login-form.component";
 
 // Declaración de rutas
 const appRoutes: Routes = [
-    {path: '', component: DemandaComponent},
+    {path: '', component: AboutComponent},
     {path: 'demanda', component: DemandaComponent},
     {path: 'mix', component: MixComponent},
     {path: 'cobertura', component: CoberturaComponent},
@@ -21,7 +21,7 @@ const appRoutes: Routes = [
     {path: 'login', component: LoginFormComponent},
     {path: 'login/:destino', component: LoginFormComponent},
     {path: 'login/:destino/:id', component: LoginFormComponent},
-    {path: '**', component: DemandaComponent} // Para cuando haya un 404
+    {path: '**', component: AboutComponent} // Para cuando haya un 404
 ]
 
 export const appRoutingProviders: any[] = [];

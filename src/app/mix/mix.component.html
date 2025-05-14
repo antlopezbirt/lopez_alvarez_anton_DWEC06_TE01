@@ -1,3 +1,34 @@
+<h1 class="display-6">Mix energético</h1>
+<article>
+  <p>
+    En estos dos gráficos tipo doughnut se muestran todas las fuentes de 
+    generación que componen la oferta del mercado eléctrico.
+  </p>
+
+  <ol>
+    <li>
+      <p>
+        En el primer gráfico se puede ver la proporción entre generación renovable
+        y generación no renovable.
+      </p>
+    </li>
+    <li>
+      <p>
+        En el segundo gráfico se entra en el detalle de cada uno de los tipos,
+        mostrando las proporciones de todos los valores de generación disponibles.
+      </p>
+    </li>
+  </ol>
+  
+  <p>
+    Por defecto se muestran los datos del día de ayer, pero puedes elegir otro día
+    justo aquí debajo:
+  </p>
+</article>
+<input type="date" name="fechaIniForm" class="form-control" [(ngModel)]="this.fechaIniForm" (change)="this.read()">
+<hr>
+
+
 <div *ngIf="this.cargando === true">
   <app-loading></app-loading>
 </div>
@@ -14,10 +45,10 @@
 </div>
 
 
-
-
-<div class="d-flex justify-content-center">
-  <canvas id="GraficoMix" class="w-75 h-75"></canvas>
+<div class="d-flex flex-column justify-content-center align-items-center">
+  <canvas id="GraficoTotales" class="w-100 h-100 my-5"></canvas>
+  <hr>
+  <canvas id="GraficoMix" class="w-100 h-100 my-5"></canvas>
 </div>
 
 <app-comentarios-lista [seccion]="this.seccion"></app-comentarios-lista>

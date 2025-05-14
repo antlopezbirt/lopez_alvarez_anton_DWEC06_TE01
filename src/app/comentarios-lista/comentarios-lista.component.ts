@@ -32,7 +32,7 @@ export class ComentariosListaComponent implements OnInit {
         for (let dato of data) {
           if(dato.seccion === this.seccion) {
             let comentario = new Comentario(dato.id, dato.nombre, dato.correo, dato.comentario, new Date(dato.fecha), dato.seccion);
-            this.comentarios.unshift(comentario);
+            this.comentarios.push(comentario);
           }
         }
       },

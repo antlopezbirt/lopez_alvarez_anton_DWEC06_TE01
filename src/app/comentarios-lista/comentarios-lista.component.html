@@ -22,10 +22,10 @@
     <div class="card mb-4">
       <div class="card-body">
         <div class="d-flex justify-content-between">
-          <div>#{{this.comentarios.length - indice}}</div><div>[{{comentario.fecha.toLocaleString("es-ES")}}]</div>
+          <div>#{{indice + 1}}</div><div>[{{comentario.fecha.toLocaleString("es-ES")}}]</div>
         </div>
         
-        <p>{{comentario.comentario}}</p>
+        <p class="fst-italic">{{comentario.comentario}}</p>
 
         <div class="d-flex justify-content-between">
           <div class="d-flex flex-row align-items-center">

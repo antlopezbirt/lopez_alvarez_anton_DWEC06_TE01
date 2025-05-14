@@ -17,9 +17,12 @@ import { Chart } from 'chart.js/auto';
 export class DemandaComponent implements OnInit {
 
   public seccion: Comentario["seccion"] = "demanda";
+  public fechaIni: any;
+  public fechaFin: any;
   public cargando: boolean = true;
 
   public demandas: Array<Demanda> = [];
+  public diferencias: Array<any> = [];
   public parametrosDemanda: any;
     
   public grafico: any;
@@ -27,13 +30,14 @@ export class DemandaComponent implements OnInit {
   constructor( private _reeApiService: ReeApiService) {
 
     // El rango por defecto es los últimos 30 días contando el actual
-    let fechaActual: Date = new Date();
-    let fechaHaceUnMes: Date = new Date(fechaActual.getTime() - 29 * 24 * 60 * 60 * 1000);
+    this.fechaFin = new Date();
+    this.fechaIni = new Date(this.fechaFin.getTime() - 30 * 24 * 60 * 60 * 1000);
+    this.fechaIni.setUTCHours(0,0,0,0);
 
     // Prepara los parámetros del endpoint de Demanda
     this.parametrosDemanda = {
-      start_date: fechaHaceUnMes.toISOString(),
-      end_date: fechaActual.toISOString(),
+      start_date: this.fechaIni.toISOString(),
+      end_date: this.fechaFin.toISOString(),
       time_trunc: 'day',
       geo_limit: 'peninsular',
       geo_ids: '8741',
@@ -49,11 +53,15 @@ export class DemandaComponent implements OnInit {
   read(): void {
     this._reeApiService.read(this.seccion, this.parametrosDemanda).subscribe({
       next: data => {
+        let datoAnterior = 0;
         for(let dato of data.included[0].attributes.values) {
           let demanda = new Demanda(dato.datetime, dato.value);
-          this.demandas.push(demanda);
+          if(datoAnterior == 0) datoAnterior = dato.value;
+          this.diferencias.unshift(((parseFloat(dato.value)*100/datoAnterior) - 100));
+          datoAnterior = dato.value;
+          this.demandas.unshift(demanda);
         }
-        this.crearGrafico();
+        //this.crearGrafico();
         this.cargando = false;
       },
       error: error => {

@@ -21,29 +21,24 @@ export class MixComponent implements OnInit {
   public errorApiMessage: unknown = null;
 
   public mixes: Array<Mix> = [];
-  public totalRenovable: unknown;
-  public totalNoRenovable: unknown;
+  public totales: Array<Mix> = [];
 
   public fechaIni: Date = new Date();
   public fechaFin: Date = new Date();
+  public fechaIniForm: string;
   
   public parametrosMix: any;
-  public grafico: any;
+
+  public graficoTotal: any = null;
+  public graficoMix: any = null;
 
   constructor( private _reeApiService: ReeApiService ) {
-
-  // start_date=2025-05-09T22:00:00.000Z&end_date=2025-05-10T21:59:59.999
-
-
+    // Fecha por defecto: ayer
     this.fechaIni.setDate(this.fechaIni.getDate() - 1);
-    this.fechaIni.setUTCHours(0,0,0,0);
-    this.fechaFin.setDate(this.fechaFin.getDate() - 1);
-    this.fechaFin.setUTCHours(23,59,59,999);
-    this.parametrosMix = {
-      start_date: this.fechaIni.toISOString(),
-      end_date: this.fechaFin.toISOString(),
-      time_trunc: 'day'
-    }
+    this.fechaIniForm = this.fechaIni.toISOString();
+    this.fechaIniForm = this.fechaIniForm.substring(0, (this.fechaIniForm.length - 14));
+    console.log(this.fechaIniForm);
+
   }
 
   ngOnInit(): void {
@@ -51,10 +46,22 @@ export class MixComponent implements OnInit {
   }
   
   ngAfterViewInit(): void {
-    
+
   }
 
   read() {
+
+    // Al iniciar la lectura se calculan los parámetros para la fecha elegida
+    this.fechaIni = new Date(this.fechaIniForm+'Z');
+    this.fechaFin = new Date(this.fechaIniForm+'Z');
+    this.fechaIni.setUTCHours(0,0,0,0);
+    this.fechaFin.setUTCHours(23,59,59,999);
+    this.parametrosMix = {
+      start_date: this.fechaIni.toISOString(),
+      end_date: this.fechaFin.toISOString(),
+      time_trunc: 'day'
+    }
+
     this._reeApiService.read('mix', this.parametrosMix).subscribe({
       next: data => {
         console.log("Mix: ", data.included[0].attributes.content);
@@ -63,7 +70,7 @@ export class MixComponent implements OnInit {
           let mix = new Mix(dato.attributes.values[0].datetime, dato.attributes.title, dato.attributes.total, true, dato.attributes.values[0].percentage);
 
           if (mix.tipo === "Generación renovable") {
-            this.totalRenovable = mix;
+            this.totales.push(mix);
           } else {
             this.mixes.push(mix);
           }
@@ -74,13 +81,18 @@ export class MixComponent implements OnInit {
           let mix = new Mix(dato.attributes.values[0].datetime, dato.attributes.title, dato.attributes.total, false, dato.attributes.values[0].percentage);
           
           if (mix.tipo === "Generación no renovable") {
-            this.totalNoRenovable = mix;
+            this.totales.push(mix);
           } else {
             this.mixes.push(mix);
           }
         }
 
-        this.crearGrafico();
+        if(this.graficoTotal != null && this.graficoMix != null) {
+          this.graficoTotal.destroy();
+          this.graficoMix.destroy();
+        }
+
+        this.crearGraficos();
         this.cargando = false;
       },
       error: error => {
@@ -93,11 +105,20 @@ export class MixComponent implements OnInit {
     })
   }
 
-  crearGrafico() {
-    console.log("Labels: ", this.mixes.map(mix => mix.tipo));
-    console.log("MW: ", this.mixes.map(mix => mix.megavatios));
+  crearGraficos() {
+    // console.log("Labels: ", this.mixes.map(mix => mix.tipo));
+    // console.log("MW: ", this.mixes.map(mix => mix.megavatios));
 
-    const data = {
+    const datosTotales = {
+      labels: this.totales.map(mix => mix.tipo),
+      datasets: [{
+        label: "MW generados",
+        data: this.totales.map(mix => mix.megavatios),
+        hoverOffset: 4
+      }]
+    };
+
+    const datosMix = {
       labels: this.mixes.map(mix => mix.tipo),
       datasets: [{
         label: "MW generados",
@@ -106,9 +127,9 @@ export class MixComponent implements OnInit {
       }]
     };
 
-    this.grafico = new Chart("GraficoMix", {
+    this.graficoTotal = new Chart("GraficoTotales", {
       type: 'doughnut',
-      data: data,
+      data: datosTotales,
       options: {
         responsive: true,
         plugins: {
@@ -117,7 +138,25 @@ export class MixComponent implements OnInit {
           },
           title: {
             display: true,
-            text: 'Mix energético'
+            text: 'Mix Renovables / No Renovables'
+          }
+        }
+      }
+    });
+
+
+    this.graficoMix = new Chart("GraficoMix", {
+      type: 'doughnut',
+      data: datosMix,
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'top',
+          },
+          title: {
+            display: true,
+            text: 'Mix Renovables / No Renovables'
           }
         }
       }

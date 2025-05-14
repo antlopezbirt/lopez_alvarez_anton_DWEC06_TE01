@@ -67,7 +67,7 @@ export class ComentarioFormEditarComponent extends ComentarioFormNuevoComponent 
         this.comentarioEditar = true;
         this.fechaEditar = this.comentario.fecha.toISOString();
         this.fechaEditar = this.fechaEditar.substring(0, (this.fechaEditar.length - 5));
-        console.log(this.fechaEditar);
+        console.log("Fecha formulario: ", this.fechaEditar);
 
         this.validarNombre();
         this.validarCorreo();

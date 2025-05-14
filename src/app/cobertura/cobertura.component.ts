@@ -30,9 +30,10 @@ export class CoberturaComponent implements OnInit {
 
   constructor(private _reeApiService: ReeApiService ) {
 
-    // El rango por defecto es los últimos 30 días contando el actual
+    // El rango es los últimos 30 días contando el actual
     let fechaActual: Date = new Date();
     let fechaHaceUnMes: Date = new Date(fechaActual.getTime() - 29 * 24 * 60 * 60 * 1000);
+    fechaHaceUnMes.setUTCHours(0,0,0,0);
 
     // Prepara los parámetros del endpoint de Generación
     this.parametrosGeneracion = {
@@ -105,15 +106,15 @@ export class CoberturaComponent implements OnInit {
       data: {
         datasets: [{
           type: 'bar',
-          label: 'Generación Renovable',
+          label: 'Generación Renovable (MW)',
           data: mwGenRenovable
         }, {
           type: 'bar',
-          label: 'Generación No Renovable',
+          label: 'Generación No Renovable (MW)',
           data: mwGenNoRenovable
         }, {
           type: 'line',
-          label: 'Demanda',
+          label: 'Demanda (MW)',
           data: mwDemanda
         }],
         labels: fechas

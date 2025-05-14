@@ -9,3 +9,15 @@ canvas {
   margin: .5em;
   z-index: 1200;
 }
+
+a.nav-link {
+  padding: 0 6px !important;
+  &:hover { 
+    background-color: rgba(255, 195, 14, 1) !important;
+    color: black !important;
+  }
+  &.fondo-dark:hover {
+    background-color: black !important;
+    color: white !important;
+  }
+}

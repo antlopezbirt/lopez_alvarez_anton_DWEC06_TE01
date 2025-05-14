@@ -1,24 +1,35 @@
-<h1>Demanda</h1>
-<p>Demanda recogida en el sistema eléctrico peninsular de los últimos 30 días</p>
+<h1 class="display-6">Demanda</h1>
+<article>
+  <p>
+    En esta sección se muestra una tabla con la demanda recogida en el sistema 
+    eléctrico peninsular de los últimos 30 días, así como la diferencia porcentual
+    diaria con respecto al día anterior.
+  </p>
+</article>
+
+<hr>
 
 <div *ngIf="this.cargando === true">
   <app-loading></app-loading>
 </div>
 
+<!-- <canvas id="GraficoDemanda" class="w-100 h-100 mb-4"></canvas> -->
+
 <table class="table table-dark table-striped" *ngIf="this.cargando === false">
   <thead>
     <tr>
-      <th>Fecha</th><th>MW</th>
+      <th>Fecha</th><th>MW demandados</th><th>Diferencia</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let demanda of this.demandas; let indice = index">
-      <td>{{demanda.fecha}}</td><td>{{demanda.megavatios}} MW</td>
+      <td>{{demanda.fecha.substring(0, 10)}}</td><td>{{demanda.megavatios.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}} MW</td>
+      <td>
+        <i *ngIf="this.diferencias[indice] != 0" class="bi bi-caret-{{this.diferencias[indice] > 0 ? 'up' : 'down'}}-fill text-{{this.diferencias[indice] > 0 ? 'success' : 'danger'}}"></i>
+        {{this.diferencias[indice] != 0 ? ' ' + this.diferencias[indice].toLocaleString(undefined, {maximumFractionDigits: 2}) + '%' : ''}}</td>
     </tr>
   </tbody>
   
 </table>
-
-<canvas id="GraficoDemanda" class="w-100 h-100 mb-4"></canvas>
 
 <app-comentarios-lista [seccion]="this.seccion"></app-comentarios-lista>

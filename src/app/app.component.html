@@ -1,28 +1,28 @@
 
 <!-- HEADER -->
 <header class="navbar navbar-expand-lg bd-navbar sticky-top bg-black mb-4 p-0 border-bottom border-warning-subtle">
-    <nav class="container-xxl bd-gutter flex-wrap flex-lg-nowrap py-0">
+    <nav class="container-xxl col-6 bd-gutter flex-wrap flex-lg-nowrap py-0">
         <a class="navbar-brand p-0 me-0 me-lg-2 fw-bold fs-6" [routerLink]="['/']"><i class="bi bi-lightning-fill text-warning"></i>infoeléctrica</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-            <li class="nav-item">
+        <div class="collapse navbar-collapse my-2" id="navbarSupportedContent">
+          <ul class="nav nav-pills ms-auto mb-lg-0">
+            <li class="nav-item mx-2">
               <a class="nav-link text-white" [routerLink]="['/demanda']">Demanda</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item mx-1">
               <a class="nav-link text-white" [routerLink]="['/mix']">Mix</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item mx-1">
               <a class="nav-link text-white" [routerLink]="['/cobertura']">Cobertura</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item mx-1">
               <a class="nav-link text-white" [routerLink]="['/about']">Acerca de</a>
             </li>
             <!-- Elemento de login -->
-            <li class="nav-item" role="button" *ngIf="this.logueado == false || this.logueado == null; else elseBlock">
-                <a class="nav-link text-white" [routerLink]="['/login']" alt="Acceder" title="Acceder"><i class="bi bi-unlock"></i></a>
+            <li class="nav-item mx-1" role="button" *ngIf="this.logueado == false || this.logueado == null; else elseBlock">
+                <a class="nav-link fondo-dark text-white" [routerLink]="['/login']" alt="Acceder" title="Acceder"><i class="bi bi-unlock"></i></a>
             </li>
               <ng-template #elseBlock>
                 <a class="nav-link text-white" [routerLink]="['']" (click)="this.deslogueo()" alt="Salir" title="Salir"><i class="bi bi-lock"></i></a>
