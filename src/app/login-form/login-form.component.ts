@@ -45,7 +45,8 @@ export class LoginFormComponent implements OnInit {
   }
 
   chequearLogin(): void {
-
+    // Para recargar el icono del componente base hay que recargar la página, 
+    // por eso usamos location.replace en lugar del router
     if(!this._loginService.loguearse(this.usuario, this.password)) {
       this.loginValido = false;
     } else if(this.comentarioId != null) {

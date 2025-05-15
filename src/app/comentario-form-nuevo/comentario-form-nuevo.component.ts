@@ -90,8 +90,8 @@ export class ComentarioFormNuevoComponent implements OnInit {
         //console.log("OK: ", data);
 
         this.errorApiError = null;
-        // Añade el comentario
 
+        // Añade el comentario
         let comentario = new Comentario(data.id, data.nombre, data.correo, data.comentario, new Date(data.fecha), data.seccion);
         this.comentarios.push(comentario);
         this._toastsService.mostrar('Añadido nuevo comentario');

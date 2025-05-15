@@ -2,7 +2,7 @@
 
 @for (toast of this._toastsService.toasts; track toast) {
 
-  <ngb-toast style="z-index: 1200;" header='infoeléctrica'
+  <ngb-toast class="my-2" header='infoeléctrica'
     [autohide]="true"
     [delay]="5000"
     (hidden)="_toastsService.eliminar(toast)"

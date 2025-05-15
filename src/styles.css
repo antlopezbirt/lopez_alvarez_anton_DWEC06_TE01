@@ -2,7 +2,7 @@ canvas {
   filter: invert(1) hue-rotate(180deg) !important;
 }
 
-.toast {
+app-toast-contenedor {
   position: fixed;
   top: 50px;
   right: 10px;
