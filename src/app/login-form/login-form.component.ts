@@ -7,7 +7,6 @@ import { ActivatedRoute, Router, ParamMap } from '@angular/router';
   standalone: false,
   templateUrl: './login-form.component.html',
   styleUrl: './login-form.component.css',
-  providers: [LoginService]
 })
 export class LoginFormComponent implements OnInit {
 

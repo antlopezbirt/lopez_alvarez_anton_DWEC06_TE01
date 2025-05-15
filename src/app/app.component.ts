@@ -14,7 +14,8 @@ export class AppComponent {
 
   public logueado: boolean | null = null;
 
-  constructor(public _loginService: LoginService, private _route: ActivatedRoute, private _router: Router) {
+  constructor(public _loginService: LoginService, private _route: ActivatedRoute, 
+    private _router: Router) {
     this.logueado = this._loginService.comprobarLogin();
   }
 

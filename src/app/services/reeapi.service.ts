@@ -6,7 +6,12 @@ import { Observable } from "rxjs";
 @Injectable()
 export class ReeApiService {
     
+    // API correcta:
     private baseUrl: string = "https://apidatos.ree.es/es/datos/";
+
+    // API para errores:
+    // private baseUrl: string = "https://apidatos.reeeeeeeee.es/es/datos/";
+    
     private endpoints: { [key: string]: string } = {
         generacion: 'generacion/evolucion-renovable-no-renovable',
         demanda: 'demanda/evolucion',

@@ -1,12 +1,13 @@
 <hr class="mt-5">
 <h2 class="mb-4 fs-5">Añade tu comentario:</h2>
 
+<!-- Pasamos (por referencia) el array de comentarios recuperados de la API al componente hijo -->
 <app-comentario-form-nuevo [comentarios]="this.comentarios" [seccion]="this.seccion"></app-comentario-form-nuevo>
 
 
 <!-- Muestra una alerta si hay error en la API -->
 <div *ngIf="this.errorApiError">
-  <div class="alert alert-warning" role="alert">
+  <div class="alert alert-warning my-5" role="alert">
     <p class="fw-bold"><i class="bi bi-exclamation-triangle-fill"></i> Error en la API de comentarios</p>
     <p class="fst-italic">{{this.errorApiError}}</p>
     <p class="fst-italic">{{this.errorApiMessage}}</p>

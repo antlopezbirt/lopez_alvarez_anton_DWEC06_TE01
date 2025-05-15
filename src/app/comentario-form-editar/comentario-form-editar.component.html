@@ -51,7 +51,7 @@
 
   <div class="d-flex justify-content-evenly">
     <button type="submit" class="btn btn-primary" (click)="cancelar()">Cancelar</button>
-    <button type="submit" class="btn btn-danger" (click)="borrarComentario()">Borrar</button>
+    <button type="submit" class="btn btn-danger" (click)="borrarComentario()" [disabled]="this.errorApiComentariosError != null">Borrar</button>
     <button type="submit" class="btn btn-success" (click)="enviarComentario(); formComentario.resetForm()" [disabled]="!this.botonActivo || !this.validarBoton()">Enviar</button>
   </div>
   

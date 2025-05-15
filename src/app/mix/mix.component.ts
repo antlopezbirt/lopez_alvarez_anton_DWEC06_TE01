@@ -10,7 +10,6 @@ import { Chart } from 'chart.js/auto';
   standalone: false,
   templateUrl: './mix.component.html',
   styleUrl: './mix.component.css',
-  providers: [ReeApiService]
 })
 
 export class MixComponent implements OnInit {
@@ -26,6 +25,8 @@ export class MixComponent implements OnInit {
   public fechaIni: Date = new Date();
   public fechaFin: Date = new Date();
   public fechaIniForm: string;
+  public fechaFormMax: string = "";
+  
   
   public parametrosMix: any;
 
@@ -33,10 +34,11 @@ export class MixComponent implements OnInit {
   public graficoMix: any = null;
 
   constructor( private _reeApiService: ReeApiService ) {
-    // Fecha por defecto: ayer
+    // Fecha por defecto: ayer. El usuario la puede cambiar.
     this.fechaIni.setDate(this.fechaIni.getDate() - 1);
-    this.fechaIniForm = this.fechaIni.toISOString();
-    this.fechaIniForm = this.fechaIniForm.substring(0, (this.fechaIniForm.length - 14));
+    this.fechaIniForm = this.fechaIni.toISOString().split('T')[0];
+    // Fecha máxima para el formulario: ayer. El usuario no la puede cambiar.
+    this.fechaFormMax = this.fechaIniForm;
   }
 
   ngOnInit(): void {
@@ -49,7 +51,9 @@ export class MixComponent implements OnInit {
 
   read() {
 
-    // Al iniciar la lectura se calculan los parámetros para la fecha elegida
+    // Al iniciar la lectura se calculan los parámetros para la fecha elegida y se vacían los arrays de datos
+    this.totales = [];
+    this.mixes = [];
     this.fechaIni = new Date(this.fechaIniForm+'Z');
     this.fechaFin = new Date(this.fechaIniForm+'Z');
     this.fechaIni.setUTCHours(0,0,0,0);
@@ -62,7 +66,7 @@ export class MixComponent implements OnInit {
 
     this._reeApiService.read('mix', this.parametrosMix).subscribe({
       next: data => {
-        // console.log("Mix: ", data.included[0].attributes.content);
+        
         this.errorApiError = null;
 
         for(let dato of data.included[0].attributes.content) {
@@ -74,7 +78,6 @@ export class MixComponent implements OnInit {
           } else {
             this.mixes.push(mix);
           }
-          
         }
 
         for(let dato of data.included[1].attributes.content) {
@@ -94,13 +97,14 @@ export class MixComponent implements OnInit {
 
         this.crearGraficos();
         this.cargando = false;
+        
       },
       error: error => {
-        console.log("Error: ", error);
+        //console.log("Error: ", error);
         this.cargando = false;
         
-        this.errorApiError = error.error.errors[0].detail;
-        this.errorApiMessage = error.message;
+        this.errorApiError = "Error al recibir los datos.";
+        this.errorApiMessage = "Se ha producido un error en la fuente de los datos. Es posible que no existan datos para ese periodo o que la fuente esté fuera de servicio.";
       }
     })
   }

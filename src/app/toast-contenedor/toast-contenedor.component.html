@@ -1,18 +1,13 @@
-<div *ngFor="let toast of _toastsService.toasts">
-  <ngb-toast #toast header='infoeléctrica' [autohide]="true"
-      [delay]="5000"
-      (hide)="_toastsService.eliminar(toast)">
-    {{ toast.mensaje }}
-  </ngb-toast>
-</div>
+<!-- Con la nueva directiva @for en lugar de ngFor -->
 
- <!-- <ngb-toast header='infoeléctrica'
-    *ngFor="let toast of _toastService.toasts"
-    [class]="toast.classname"
+@for (toast of this._toastsService.toasts; track toast) {
+
+  <ngb-toast style="z-index: 1200;" header='infoeléctrica'
     [autohide]="true"
-    [delay]="toast.delay || 5000"
-    (hide)="_toastService.eliminar(toast)"
+    [delay]="5000"
+    (hidden)="_toastsService.eliminar(toast)"
   >
 
-   {{ toast.mensaje }}
-</ngb-toast> -->
+    {{ toast }}
+  </ngb-toast>
+}

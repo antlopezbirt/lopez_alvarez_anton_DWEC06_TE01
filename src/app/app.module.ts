@@ -14,11 +14,17 @@ import { LoadingComponent } from './loading/loading.component';
 import { ComentariosListaComponent } from './comentarios-lista/comentarios-lista.component';
 import { FormsModule } from '@angular/forms';
 import { ComentarioFormNuevoComponent } from './comentario-form-nuevo/comentario-form-nuevo.component';
-import { ToastContenedorComponent } from './toast-contenedor/toast-contenedor.component';
-
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ComentarioFormEditarComponent } from './comentario-form-editar/comentario-form-editar.component';
 import { LoginFormComponent } from './login-form/login-form.component';
+import { ToastContenedorComponent } from './toast-contenedor/toast-contenedor.component';
+
+import { ReeApiService } from './services/reeapi.service';
+import { ComentariosService } from './services/comentarios.service';
+import { LoginService } from './services/login.service';
+import { ToastsService } from './services/toasts.service';
+
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 
 @NgModule({
   declarations: [
@@ -42,7 +48,7 @@ import { LoginFormComponent } from './login-form/login-form.component';
     FormsModule,
     NgbModule,
   ],
-  providers: [appRoutingProviders, provideHttpClient()],
+  providers: [appRoutingProviders, provideHttpClient(), ReeApiService, ComentariosService, LoginService, ToastsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

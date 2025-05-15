@@ -11,7 +11,6 @@ import { Chart } from 'chart.js/auto';
   standalone: false,
   templateUrl: './cobertura.component.html',
   styleUrl: './cobertura.component.css',
-  providers: [ReeApiService]
 })
 
 export class CoberturaComponent implements OnInit {
@@ -63,6 +62,9 @@ export class CoberturaComponent implements OnInit {
   read(): void {
     this._reeApiService.read('demanda', this.parametrosDemanda).subscribe({
       next: data => {
+
+        this.errorApiError = null;
+        
         // Demanda
         for(let dato of data.included[0].attributes.values) {
           let demanda = new Demanda(dato.datetime, dato.value);
@@ -93,8 +95,8 @@ export class CoberturaComponent implements OnInit {
             console.log("Error al leer los datos de Generación: ", error);
             this.cargando = false;
 
-            this.errorApiError = error.error.errors[0].detail;
-            this.errorApiMessage = error.message;
+            this.errorApiError = "Error al recibir los datos.";
+            this.errorApiMessage = "Se ha producido un error en la fuente de los datos. Es posible que no existan datos para ese periodo o que la fuente esté fuera de servicio.";
           }
         })
       },
@@ -102,8 +104,8 @@ export class CoberturaComponent implements OnInit {
         console.log("Error al leer los datos de Demanda: ", error);
         this.cargando = false;
 
-        this.errorApiError = error.error.errors[0].detail;
-        this.errorApiMessage = error.message;
+        this.errorApiError = "Error al recibir los datos.";
+        this.errorApiMessage = "Se ha producido un error en la fuente de los datos. Es posible que no existan datos para ese periodo o que la fuente esté fuera de servicio.";
       }
     })
   }

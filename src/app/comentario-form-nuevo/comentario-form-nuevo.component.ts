@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Comentario } from '../models/Comentario';
 import { ComentariosService } from '../services/comentarios.service';
-import { ToastService } from '../services/toasts.service';
+import { ToastsService } from '../services/toasts.service';
 
 
 @Component({
@@ -9,13 +9,15 @@ import { ToastService } from '../services/toasts.service';
   standalone: false,
   templateUrl: './comentario-form-nuevo.component.html',
   styleUrl: './comentario-form-nuevo.component.css',
-  providers: [ComentariosService, ToastService]
 })
 export class ComentarioFormNuevoComponent implements OnInit {
 
   // Inputs con la sección a aplicar al comentario y el array de comentarios
   @Input() seccion: any;
   @Input() comentarios: Array<Comentario> = [];
+
+  public errorApiError: string | null = null;
+  public errorApiMessage: string | null = null;
 
   // Valor inicial del comentario
   public comentario: Comentario = new Comentario('0','','','', new Date(),'demanda');
@@ -30,7 +32,7 @@ export class ComentarioFormNuevoComponent implements OnInit {
   public botonActivo: boolean = false;
 
 
-  constructor(public _comentariosService: ComentariosService, public _toastsService: ToastService) {}
+  constructor(public _comentariosService: ComentariosService, public _toastsService: ToastsService) {}
 
   ngOnInit(): void {}
 
@@ -85,14 +87,15 @@ export class ComentarioFormNuevoComponent implements OnInit {
 
     this._comentariosService.create(comentarioNuevo).subscribe({
       next: data => {
-        console.log("OK: ", data);
+        //console.log("OK: ", data);
 
+        this.errorApiError = null;
         // Añade el comentario
 
         let comentario = new Comentario(data.id, data.nombre, data.correo, data.comentario, new Date(data.fecha), data.seccion);
-        this.comentarios.unshift(comentario);
+        this.comentarios.push(comentario);
         this._toastsService.mostrar('Añadido nuevo comentario');
-        console.log("Comentarios: ", this.comentarios);
+        // console.log("Comentarios: ", this.comentarios);
 
         // Reinicia la validación del formulario
 
@@ -105,7 +108,9 @@ export class ComentarioFormNuevoComponent implements OnInit {
         this.botonActivo = false;
       },
       error: error => {
-        console.log("Error: ", error);
+        console.log("Error al escribir el comentarios: ", error);
+        this.errorApiError = "Se ha producido un error en la solicitud. Es posible que la fuente esté fuera de servicio.";
+        this.errorApiMessage = error.message;
       }
     });
   }

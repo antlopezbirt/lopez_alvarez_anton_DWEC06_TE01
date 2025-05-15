@@ -11,7 +11,6 @@ import { Chart } from 'chart.js/auto';
   standalone: false,
   templateUrl: './demanda.component.html',
   styleUrl: './demanda.component.css',
-  providers: [ReeApiService]
 })
 
 export class DemandaComponent implements OnInit {
@@ -71,8 +70,8 @@ export class DemandaComponent implements OnInit {
         console.log("Read error: ", error);
         this.cargando = false;
 
-        this.errorApiError = error.error.errors[0].detail;
-        this.errorApiMessage = error.message;
+        this.errorApiError = "Error al recibir los datos.";
+        this.errorApiMessage = "Se ha producido un error en la fuente de los datos. Es posible que no existan datos para ese periodo o que la fuente esté fuera de servicio.";
       }
     })
   }

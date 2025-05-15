@@ -10,7 +10,6 @@ import CryptoJS from 'crypto-js';
   standalone: false,
   templateUrl: './comentarios-lista.component.html',
   styleUrl: './comentarios-lista.component.css',
-  providers: [LoginService, ComentariosService]
 })
 export class ComentariosListaComponent implements OnInit {
 
@@ -41,7 +40,7 @@ export class ComentariosListaComponent implements OnInit {
       },
       error: error => {
         console.log("Error al leer los comentarios: ", error);
-        this.errorApiError = error.error;
+        this.errorApiError = "Se ha producido un error en la solicitud. Es posible que la fuente esté fuera de servicio.";
         this.errorApiMessage = error.message;
       }
     });

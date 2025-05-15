@@ -4,14 +4,13 @@ import { ComentarioFormNuevoComponent } from '../comentario-form-nuevo/comentari
 import { Router, ParamMap, ActivatedRoute } from '@angular/router';
 import { LoginService } from '../services/login.service';
 import { ComentariosService } from '../services/comentarios.service';
-import { ToastService } from '../services/toasts.service';
+import { ToastsService } from '../services/toasts.service';
 
 @Component({
   selector: 'app-comentario-form-editar',
   standalone: false,
   templateUrl: './comentario-form-editar.component.html',
   styleUrl: './comentario-form-editar.component.css',
-  providers: [LoginService, ComentariosService, ToastService]
 })
 export class ComentarioFormEditarComponent extends ComentarioFormNuevoComponent implements OnInit {
 
@@ -29,7 +28,7 @@ export class ComentarioFormEditarComponent extends ComentarioFormNuevoComponent 
   constructor(
     private _route: ActivatedRoute, private _router: Router, 
     private _loginService: LoginService, _comentariosService: ComentariosService, 
-    _toastsService: ToastService
+    _toastsService: ToastsService
   ) {
     super(_comentariosService, _toastsService);
 
@@ -66,13 +65,13 @@ export class ComentarioFormEditarComponent extends ComentarioFormNuevoComponent 
   getComentarioById(id: string): void {
     this._comentariosService.getById(id).subscribe({
       next: data => {
-        console.log(data.fecha);
+        this.errorApiComentariosError = null;
         this.comentario = new Comentario(data.id, data.nombre, data.correo, data.comentario, new Date(data.fecha), data.seccion);
-        console.log(this.comentario);
+        // console.log(this.comentario);
         this.comentarioEditar = true;
         this.fechaEditar = this.comentario.fecha.toISOString();
         this.fechaEditar = this.fechaEditar.substring(0, (this.fechaEditar.length - 5));
-        console.log("Fecha formulario: ", this.fechaEditar);
+        // console.log("Fecha formulario: ", this.fechaEditar);
 
         this.validarNombre();
         this.validarCorreo();
@@ -80,7 +79,7 @@ export class ComentarioFormEditarComponent extends ComentarioFormNuevoComponent 
       },
       error: error => {
         console.log("Error al recuperar el comentario: ", error);
-        this.errorApiComentariosError = error.error;
+        this.errorApiComentariosError = "Se ha producido un error en la solicitud. Es posible que la fuente esté fuera de servicio.";
         this.errorApiComentariosMessage = error.message;
       }
     })
@@ -102,7 +101,7 @@ export class ComentarioFormEditarComponent extends ComentarioFormNuevoComponent 
     this._comentariosService.update(this.comentario.id, this.comentario).subscribe({
       next: dato => {
         console.log("OK: ", dato);
-        alert('El comentario se ha modificado correctamente.');
+        this._toastsService.mostrar('El comentario se ha modificado correctamente.');
         this.cancelar();
       },
       error: error => {
@@ -116,12 +115,12 @@ export class ComentarioFormEditarComponent extends ComentarioFormNuevoComponent 
     this._comentariosService.delete(this.comentario.id).subscribe({
       next: data => {
         console.log("OK: ", data);
-        alert('El comentario se ha eliminado correctamente.');
+        this._toastsService.mostrar('El comentario se ha eliminado correctamente.');
         this.cancelar();
       },
       error: error => {
         console.log("Error: ", error);
-        alert('Ha habido un error al eliminar el comentario.');
+        this._toastsService.mostrar('Ha habido un error al eliminar el comentario.');
       }
     });
   }

@@ -1,31 +1,20 @@
 <h1 class="display-6">Mix energético</h1>
 <article>
   <p>
-    En estos dos gráficos tipo doughnut se muestran todas las fuentes de 
-    generación que componen la oferta del mercado eléctrico.
+    En estos dos gráficos tipo doughnut se muestra la composición del mercado
+    de generación.
   </p>
-
-  <ol>
-    <li>
-      <p>
-        En el primer gráfico se puede ver la proporción entre generación renovable
-        y generación no renovable.
-      </p>
-    </li>
-    <li>
-      <p>
-        En el segundo gráfico se entra en el detalle de cada uno de los tipos,
-        mostrando las proporciones de todos los valores de generación disponibles.
-      </p>
-    </li>
-  </ol>
+  <p>
+    El primer gráfico muestra la proporción entre generación renovable
+    y no renovable. El segundo, desglosa todos los subtipos de generación.
+  </p>
   
   <p>
     Por defecto se muestran los datos del día de ayer, pero puedes elegir otro día
     justo aquí debajo:
   </p>
 </article>
-<input type="date" name="fechaIniForm" class="form-control" [(ngModel)]="this.fechaIniForm" (change)="this.read()">
+<input type="date" name="fechaIniForm" max="{{this.fechaFormMax}}" class="form-control" [(ngModel)]="this.fechaIniForm" (change)="this.read()">
 <hr>
 
 
@@ -36,7 +25,7 @@
 
 <div *ngIf="this.errorApiError">
 
-  <div class="alert alert-warning" role="alert">
+  <div class="alert alert-warning my-5" role="alert">
     <p class="fw-bold"><i class="bi bi-exclamation-triangle-fill"></i> Error en la API de REE</p>
     <p class="fst-italic">{{this.errorApiError}}</p>
     <p class="fst-italic">{{this.errorApiMessage}}</p>
@@ -45,10 +34,10 @@
 </div>
 
 
-<div class="d-flex flex-column justify-content-center align-items-center">
-  <canvas id="GraficoTotales" class="w-100 h-100 my-5"></canvas>
+<div class="d-flex justify-content-center align-items-center">
+  <canvas id="GraficoTotales" class="w-100 h-100 my-4"></canvas>
   <hr>
-  <canvas id="GraficoMix" class="w-100 h-100 mb-5"></canvas>
+  <canvas id="GraficoMix" class="w-100 h-100 my-4"></canvas>
 </div>
 
 <app-comentarios-lista [seccion]="this.seccion"></app-comentarios-lista>
