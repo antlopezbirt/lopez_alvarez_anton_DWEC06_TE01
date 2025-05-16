@@ -66,6 +66,10 @@ export class MixComponent implements OnInit {
 
     this._reeApiService.read('mix', this.parametrosMix).subscribe({
       next: data => {
+
+        this.totales = [];
+        this.mixes = []
+        
         
         this.errorApiError = null;
 
